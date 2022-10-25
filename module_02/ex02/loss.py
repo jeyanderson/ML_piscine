@@ -1,6 +1,6 @@
 import numpy as np
 
-def loss_elem_(y,y_hat):
+def loss_(y,y_hat):
     if not isinstance(y,np.ndarray)or not y.size or y.ndim>2 or y.shape[1]!=1 or not np.issubdtype(y.dtype,np.number):
         print('y has to be a numpy array, vector of dim (x,1)')
         return None
@@ -10,9 +10,5 @@ def loss_elem_(y,y_hat):
     if y.shape != y_hat.shape:
         print('y and y_hat has different shapes.')
         return None
-    return (y-y_hat)**2
-def loss_(y,y_hat):
-    squared_loss=loss_elem_(y,y_hat)
-    if squared_loss is None:
-        return None
-    return squared_loss.sum()/(2*y.shape[0])
+    error=y-y_hat
+    return float(error.T.dot(error)/(2*y.shape[0]))
